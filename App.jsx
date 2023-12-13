@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { CartProvider } from "./context/CartContext";
+import { CartProvider } from "./src/context/CartContext";
 import { Routes, Route } from 'react-router-dom';
-import "./App.css";
-import Home from './Components/Home';
-import Alta from './Components/Alta';
-import Contacto from './Components/Contacto';
-import Nosotros from './Components/Nosotros';
+import './src/sApp.css';
+import Home from './src/Components/Home';
+import Alta from './src/Components/Alta';
+import Contacto from './src/Components/Contacto';
+import Nosotros from './src/Components/Nosotros';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Header from './Components/Header';
-import CartModal from './Components/CartModal';
+import Header from './src/Components/Header';
+import CartModal from './src/Components/CartModal';
 
 
 const App = () => {
