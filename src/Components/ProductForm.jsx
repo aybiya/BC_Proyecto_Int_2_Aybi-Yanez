@@ -24,7 +24,7 @@ const ProductForm = ({ addProduct }) => {
 
     // Validación para 'size'
     if (formData.size.length < 7){
-      validationErrors.size = 'Debe contentener mínimo 7 caracteres, tamaño alto x ancho o unidades';
+      validationErrors.size = 'Debe contentener mínimo 7 caracteres, el tamaño: alto x ancho o valor de unidades';
     }
 
     // Validación para 'model'

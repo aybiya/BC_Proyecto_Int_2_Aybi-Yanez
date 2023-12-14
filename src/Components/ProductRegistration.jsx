@@ -3,7 +3,7 @@ import Header from './Header';
 import ProductForm from './ProductForm';
 import Footer from './Footer';
 
-const Alta = ({ openCartModal, cartItems, updateQuantity, removeProduct }) => {
+const ProductRegistration = () => {
   const [products, setProducts] = useState([]);
 
   // Función para agregar un producto a la lista
@@ -15,17 +15,10 @@ const Alta = ({ openCartModal, cartItems, updateQuantity, removeProduct }) => {
 
   return (
     <>
-      <Header 
-        openCartModal={openCartModal}
-        cartItems={cartItems}
-        updateQuantity={updateQuantity}
-        removeProduct={removeProduct}
-      />
       <h1>Alta de Producto</h1>
       <ProductForm addProduct={handleAddProduct} />
-      <Footer />
     </>
   );
 };
 
-export default Alta;
+export default ProductRegistration;

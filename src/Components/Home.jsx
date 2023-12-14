@@ -9,7 +9,7 @@ import ProductsList from './ProductsList';
 
 
 const Home = () => {
-  const { cartItems, addToCart, removeProduct, openCartModal, closeCartModal } = useContext(CartContext);
+  const { addToCart } = useContext(CartContext);
   const [products, setProducts] = useState([]);
   const [filteredModels, setFilteredModels] = useState([]);
   const [filteredSizes, setFilteredSizes] = useState([]);
@@ -84,13 +84,6 @@ const Home = () => {
 
   return (
     <>
-      <Header
-        openCartModal={openCartModal}
-        closeCartModal={closeCartModal}
-        cartItems={cartItems}
-        addToCart={addToCart}
-        removeProduct={removeProduct}
-      />
       <h1>Fondos Fotográficos</h1>
       <div className='main-container'>
         <Aside
@@ -109,7 +102,6 @@ const Home = () => {
           />
         </section>
       </div>
-      <Footer />
     </>
   );
 };

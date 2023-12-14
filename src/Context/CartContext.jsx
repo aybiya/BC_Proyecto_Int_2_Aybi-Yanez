@@ -18,10 +18,12 @@ export const CartContext = createContext();
 
   // Cargar carrito desde localStorage al iniciar la aplicación
   useEffect(() => {
-    const storedCart = localStorage.getItem('cartItems');
+    const storedCart = localStorage.getItem('cartInfo');
     if (storedCart !== null && storedCart !== undefined) {
       try {
-        setCartItems(JSON.parse(storedCart));
+        const { cartItems, selectedQuantities } = JSON.parse(storedCart);
+        setCartItems(cartItems);
+        setSelectedQuantities(selectedQuantities);
       } catch (error) {
         console.error('Error al analizar la cadena JSON:', error);
       }
@@ -30,8 +32,21 @@ export const CartContext = createContext();
 
   // Actualizar localStorage cada vez que el carrito cambie
   useEffect(() => {
-    localStorage.setItem('cartItems', JSON.stringify(cartItems));
-  }, [cartItems]);
+    localStorage.setItem('cartInfo', JSON.stringify({ cartItems, selectedQuantities }));
+  }, [cartItems, selectedQuantities]);
+
+  // Guardar la información del carrito antes de que la página se recargue
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      localStorage.setItem('cartInfo', JSON.stringify({ cartItems, selectedQuantities }));
+    };
+  
+    window.addEventListener('beforeunload', handleBeforeUnload);
+  
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [cartItems, selectedQuantities]);
   
   // agregar productos al carrito
   const addToCart = (product, selectedQuantity) => {
@@ -78,7 +93,6 @@ export const CartContext = createContext();
     setCartItems(updatedCartItems);
     localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
 
-    toast.success('Cantidad actualizada:', updatedCartItems);
   };
 
 
@@ -130,7 +144,16 @@ export const CartContext = createContext();
     toast.success('Producto eliminado', filteredCartItems);
   };
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, removeProduct, isCartModalOpen, openCartModal, closeCartModal, selectedQuantities }}
+    <CartContext.Provider 
+      value={{ 
+        cartItems, 
+        addToCart, 
+        removeProduct, 
+        isCartModalOpen, 
+        openCartModal, 
+        closeCartModal, 
+        selectedQuantities 
+      }}
     >
       {children}
     </CartContext.Provider>

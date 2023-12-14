@@ -8,6 +8,7 @@ import ReactModal from 'react-modal';
 const CartModal = () => {
   const { isCartModalOpen, closeCartModal, cartItems, removeProduct, selectedQuantities } = useContext(CartContext);
 
+  // cerrar el carrito con tecla 'Esc'
   const handleKeyDown = (e) => {
     if (e.key === 'Escape') {
       closeCartModal();

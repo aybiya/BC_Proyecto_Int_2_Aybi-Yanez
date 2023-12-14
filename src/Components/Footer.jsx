@@ -11,12 +11,12 @@ const Footer = () => {
     <footer>
       <section className='socialMedia'>
         <article>
-            <Link to="https://api.whatsapp.com/send/?phone=5493874651532" target="_blank">
-                <IoLogoWhatsapp />
-            </Link>
-            <a href="mailto:ay.fondos@gmail.com" target="_blank">
-                <IoIosMail />
-            </a>
+          <a href="https://api.whatsapp.com/send/?phone=5493874651532" target="_blank">
+            <IoLogoWhatsapp />
+          </a>
+          <a href="mailto:ay.fondos@gmail.com" target="_blank">
+              <IoIosMail />
+          </a>
         </article>
         <article>
             <a href="https://www.instagram.com/ay.fondos/" target="_blank">
@@ -28,8 +28,8 @@ const Footer = () => {
         </article>
       </section>
       <Link to="/">
-          <img className='logo' src="https://aybiya.github.io/BC_Proyecto_Int_Aybi-Yanez/img/logo-AYfondosBlanco.svg" alt="Logo" />
-        </Link>
+        <img className='logo' src="https://aybiya.github.io/BC_Proyecto_Int_Aybi-Yanez/img/logo-AYfondosBlanco.svg" alt="Logo" />
+      </Link>
       <ul className='linksFooter'>
         <li>
           <Link to="/">Inicio</Link>

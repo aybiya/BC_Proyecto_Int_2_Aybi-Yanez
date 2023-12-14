@@ -8,7 +8,6 @@ const ProductCard = ({ product, addToCart }) => {
     const newSelectedQuantity = selectedQuantity + 1; 
   
     addToCart({ product, selectedQuantity: newSelectedQuantity });
-    console.log('Agregado al carrito:', { ...product, selectedQuantity: newSelectedQuantity });
     setSelectedQuantity(newSelectedQuantity); 
   };
 

@@ -1,37 +1,9 @@
-import React, { useState } from 'react';
-import Header from './Header';
-import Footer from './Footer';
+import React from 'react';
 
-const Nosotros = ({ openCartModal, cartItems, removeProduct }) => {
-
-  const handleAddProduct = (newProduct) => {
-    // Añadir el nuevo producto al carrito global
-    const updatedCartItems = [...cartItems, newProduct];
-    
-    // Actualizar el carrito global
-    updateCart(updatedCartItems);
-  
-    // Puedes usar la prop openCartModal para abrir el modal del carrito si es necesario.
-    openCartModal();
-  };
-
-  const handleOpenCartModal = () => {
-    openCartModal();
-  };
-
-  const updateQuantity = (newCartItems) => {
-    setCartItems(newCartItems);
-    localStorage.setItem('cartItems', JSON.stringify(newCartItems));
-  };
+const AboutUs = () => {
 
   return (
     <>
-      <Header
-        openCartModal={openCartModal}
-        cartItems={cartItems}
-        updateQuantity={updateQuantity}
-        removeProduct={removeProduct}
-      />
       <h1>Sobre Nosotros</h1>
       <section className="us-container">
         {/* card 1 */}
@@ -70,9 +42,8 @@ const Nosotros = ({ openCartModal, cartItems, removeProduct }) => {
           </div>
         </article>
       </section>
-      <Footer />
     </>
   );
 }
 
-export default Nosotros;
+export default AboutUs;
