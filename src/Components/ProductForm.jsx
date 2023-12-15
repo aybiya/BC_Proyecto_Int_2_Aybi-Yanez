@@ -28,7 +28,7 @@ const ProductForm = ({ addProduct }) => {
   const validateField = (fieldName, value) => {
     let error = '';
 
-    // Implementa las validaciones específicas para cada campo
+    // validaciones específicas para cada campo
     switch (fieldName) {
         case 'image':
             // Validación de URL
