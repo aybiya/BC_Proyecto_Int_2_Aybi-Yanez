@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import Header from './Header';
-import ProductForm from './ProductForm';
-import Footer from './Footer';
+import ProductForm from '../Components/ProductForm';
 
 const ProductRegistration = () => {
   const [products, setProducts] = useState([]);

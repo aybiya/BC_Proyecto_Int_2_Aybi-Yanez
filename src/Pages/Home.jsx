@@ -2,10 +2,8 @@ import React, { useContext, useState, useEffect } from 'react';
 import { CartContext } from '../Context/CartContext';
 import { toast } from 'react-toastify';
 import "../App.css";
-import Header from './Header';
-import Aside from './Aside';
-import Footer from './Footer';
-import ProductsList from './ProductsList';
+import Aside from '../Components/Aside';
+import ProductsList from '../Components/ProductsList';
 
 
 const Home = () => {
