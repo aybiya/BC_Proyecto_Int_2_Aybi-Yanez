@@ -10,48 +10,89 @@ const ProductForm = ({ addProduct }) => {
     price: '',
     stock: '',
     shipping: false,
-  });
+});
 
   const [errors, setErrors] = useState({});
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+
+    validateField(name, value);
+  };
+
+  const validateField = (fieldName, value) => {
+    let error = '';
+
+    // Implementa las validaciones específicas para cada campo
+    switch (fieldName) {
+        case 'image':
+            // Validación de URL
+            error = value.trim() && isValidUrl(value) ? '' : 'Formato url requerido';
+            break;
+          case 'size':
+            // Validación de tamaño con expresión regular
+            error = value.trim() && /^\d{2,3}x\d{2,3}cm$/.test(value) ? '' : 'Formato correcto: alto x ancho, al menos 7 caracteres.';
+            break;
+          case 'model':
+            // Validación de modelo con expresión regular
+            error = value.trim() && /^[a-zA-ZáéíóúÁÉÍÓÚüÜ\s]{6,}$/.test(value) ? '' : 'Debe tener al menos 6 caracteres y solo letras';
+            break;
+          case 'description':
+            // Validación de descripción con longitud mínima
+            error = value.trim().length >= 16 ? '' : 'Debe tener al menos 16 caracteres';
+            break;
+          case 'price':
+            // Validación de precio con expresión regular
+            error = value.trim() && /^\$?\d{1,3}(?:\.\d{3})*$/.test(value) && parseInt(value, 10) >= 1 ? '' : 'El precio debe ser mayor a 0';
+            break;
+            case 'stock':
+            // Validación de precio con expresión regular
+            error = /^\d+$/.test(value) && parseInt(value, 10) >= 1 ? '' : 'Valor mínimo 1';
+            break;
+          default:
+            break;
+        }
+
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [fieldName]: error,
+    }));
+  };
+
   const validateForm = () => {
-    const validationErrors = {};
+    const newErrors = {};
 
-    // Validación para 'image'
-    if (!formData.image.trim()) {
-      validationErrors.image = 'Formato url requerido';
+
+    for (const [fieldName, value] of Object.entries(formData)) {
+      validateField(fieldName, value);
+
+      if (errors[fieldName]) {
+        newErrors[fieldName] = errors[fieldName];
+      }
     }
 
-    // Validación para 'size'
-    if (formData.size.length < 7){
-      validationErrors.size = 'Debe contentener mínimo 7 caracteres, el tamaño: alto x ancho o valor de unidades';
+    setErrors(newErrors);
+
+    // Verifica si hay errores y si todos los campos están completos
+    const hasErrors = Object.values(newErrors).some((error) => error !== '');
+    const isFormComplete = Object.values(formData).every((value) => value !== '');
+
+    if (hasErrors) {
+      toast.error('Completar los campos de manera correcta');
+      return false;
     }
 
-    // Validación para 'model'
-    if (formData.model.length < 6)  {
-      validationErrors.model = 'Debe contentener mínimo 6 caracteres';
+    if (!isFormComplete) {
+      toast.error('Completar todos los datos');
+      return false;
     }
 
-    // Validación para 'description'
-    if (formData.description.length < 16) {
-      validationErrors.description = 'Debe contentener mínimo 16 caracteres';
-    }
-
-    // Validación para 'price'
-    if (!/^\$?\d{1,3}(?:\.\d{3})*$/gm.test(formData.price)) {
-      validationErrors.price = 'Debe ser en un formato válido';
-    }
-
-    //Validación para 'stock'
-
-    if (!/^\d+$/.test(formData.stock) || parseInt(formData.stock) <= 0) {
-      validationErrors.stock = 'Debe ingresarse cantidad de stock, mínimo 1';
-    }
-
-
-    setErrors(validationErrors);
-
-    return Object.keys(validationErrors).length === 0; // Devuelve true si no hay errores
+    return true;
   };
 
   // Para que se cargue el producto en la API
@@ -82,25 +123,34 @@ const ProductForm = ({ addProduct }) => {
             model: '',
             description: '',
             price: '',
-            stock: '0',
+            stock: '',
             shipping: false,
           });
 
-          // Muestra un mensaje informativo con React Toastify solo si hace clic en "Agregar"
-          toast.success('Producto agregado exitosamente');
-        } else {
-          console.error('Error al enviar datos a la API');
-          // Muestra un mensaje de error con React Toastify solo si hace clic en "Agregar"
-          toast.error('Error al agregar el producto');
-        }
+          toast.success('Producto agregado exitosamente!');
+        } 
       } catch (error) {
         console.error('Error adding product', error);
-        // Muestra un mensaje de error con React Toastify solo si hace clic en "Agregar"
         toast.error('Error al agregar el producto');
       }
-    } else {
-      // Muestra un mensaje de error con React Toastify solo si hace clic en "Agregar" y hay errores de validación
-      toast.error('Error en la validación. No se puede agregar el producto');
+    } 
+  };
+
+  const isValidUrl = (url) => {
+    try {
+      new URL(url);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  };
+
+  const handleAddProductBtn = () => {
+    const isValid = validateForm();
+
+    if (isValid) {
+      // Realiza la acción correspondiente al hacer clic en el botón de agregar
+      console.log('Agregando producto al carrito...');
     }
   };
 
@@ -114,8 +164,9 @@ const ProductForm = ({ addProduct }) => {
             Imagen
             <input
               type="text"
+              name="image"
               value={formData.image}
-              onChange={(e) => setFormData({ ...formData, image: e.target.value })}
+              onChange={handleChange}
             />
             {errors.image && <p className='error-message'>{errors.image}</p>}
           </label>
@@ -126,8 +177,9 @@ const ProductForm = ({ addProduct }) => {
             Tamaño
             <input
               type="text"
+              name="size"
               value={formData.size}
-              onChange={(e) => setFormData({ ...formData, size: e.target.value })}
+              onChange={handleChange}
             />
             {errors.size && <p className='error-message'>{errors.size}</p>}
           </label>
@@ -138,8 +190,9 @@ const ProductForm = ({ addProduct }) => {
             Modelo
             <input
               type="text"
+              name="model"
               value={formData.model}
-              onChange={(e) => setFormData({ ...formData, model: e.target.value })}
+              onChange={handleChange}
             />
             {errors.model && <p className='error-message'>{errors.model}</p>}
           </label>
@@ -149,8 +202,9 @@ const ProductForm = ({ addProduct }) => {
           <label>
             Descripción
             <input
+              name="description"
               value={formData.description}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+              onChange={handleChange}
             />
             {errors.description && <p className='error-message'>{errors.description}</p>}
           </label>
@@ -161,8 +215,9 @@ const ProductForm = ({ addProduct }) => {
             Precio
             <input
               type="text"
+              name="price"
               value={formData.price}
-              onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+              onChange={handleChange}
             />
             {errors.price && <p className='error-message'>{errors.price}</p>}
           </label>
@@ -173,8 +228,9 @@ const ProductForm = ({ addProduct }) => {
             Stock
             <input
               type="text"
+              name="stock"
               value={formData.stock}
-              onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
+              onChange={handleChange}
             />
             {errors.stock && <p className='error-message'>{errors.stock}</p>}
           </label>
@@ -185,12 +241,13 @@ const ProductForm = ({ addProduct }) => {
             Envíos
             <input
               type="checkbox"
+              name="shipping"
               checked={formData.shipping}
-              onChange={(e) => setFormData({ ...formData, shipping: e.target.checked })}
+              onChange={handleChange}
             />
           </label>
         </article>
-        <button className='form-product__btn' type="submit">Agregar</button>
+        <button className='form-product__btn' type="submit" onClick={handleAddProductBtn}>Agregar</button>
       </form>
     </section>
   );
