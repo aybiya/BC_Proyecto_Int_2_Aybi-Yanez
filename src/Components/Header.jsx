@@ -8,7 +8,7 @@ import CartModal from './CartModal';
 const Header = () => {
   const { isCartModalOpen, openCartModal, closeCartModal, cartItems } = useContext(CartContext);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 770);
 
 
   const toggleMenu = () => {
@@ -20,7 +20,7 @@ const Header = () => {
   };
 
   const handleResize = () => {
-    setIsMobile(window.innerWidth <= 768);
+    setIsMobile(window.innerWidth <= 770);
   };
 
   useEffect(() => {

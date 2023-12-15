@@ -11,6 +11,7 @@ header{
         background-color: C.$lightGrayColor;
         box-shadow: 2px 2px 20px 0.8px rgb(173, 175, 177);
         display: flex;
+        justify-content:right;
         align-items: center;
         //para que quede fija
         position: fixed;
@@ -21,6 +22,7 @@ header{
         .logo{
             width: 50%;
             padding: 5%;
+            margin-right: auto;
         }
         
         .navBar-menu {
@@ -32,9 +34,7 @@ header{
             background-color: C.$lightGrayColor;
             border: none;
             font-size: 1.5rem;
-            margin-left: auto;
             padding-right: 2rem;
-            width: 5%;
 
             &:hover{
                 color: C.$primaryColor;
@@ -44,7 +44,7 @@ header{
 
         ul{
             margin-left: auto;
-            padding: 0;
+            padding-right: 2rem;
             width: 35%;
             display: flex;
             justify-content: space-around;
@@ -70,6 +70,7 @@ header{
 
         //NavbBar BP mobile
         @include M.medias(mobile) {
+            justify-content:space-evenly;
             //Bóton hamburguesa
             flex-wrap: wrap;
             .navBar-cartBtn-desk{
@@ -105,8 +106,11 @@ header{
 
         //NavbBar BP tablet
         @include M.medias(tablet){
-            ul {
-                width: 50%;
+            ul{
+                padding-right: 2rem;
+                li {
+                    padding:0 1rem;
+                }
             }
         }
 
