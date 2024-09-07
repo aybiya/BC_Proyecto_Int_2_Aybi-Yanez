@@ -4,7 +4,9 @@
 @use './h-colors' as C;
 @use './mixin.scss' as M;
 
-
+*{
+    width: 100%;
+}
 html {
     font-family: F.$mainFont;
     font-size: F.$fontSize;
